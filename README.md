@@ -1,2 +1,2 @@
-# HDP-add-ons
-add-ons scripts for ambari / hortonworks manager
+# CDH-HDP-add-ons
+add-ons scripts for Cloudera and HortoWorks clusters
