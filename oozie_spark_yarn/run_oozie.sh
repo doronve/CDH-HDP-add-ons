@@ -17,8 +17,8 @@ hdfs dfs -chmod 777 $tmpdir
 rm -f ${tmpdir}/job.properties ${tmpdir}/oozie.output ${tmpdir}/workflow.xml ${tmpdir}/myhive.py ${tmpdir}/run-spark-submit.sh
 cp ${tmpdir}/job.properties.template     ${tmpdir}/job.properties
 cp ${tmpdir}/workflow.xml.template       ${tmpdir}/workflow.xml
-cp ${tmpdir}myhive.py.template           ${tmpdir}/myhive.py
-cp ${tmpdir}run-spark-submit.sh.template ${tmpdir}/run-spark-submit.sh
+cp ${tmpdir}/myhive.py.template           ${tmpdir}/myhive.py
+cp ${tmpdir}/run-spark-submit.sh.template ${tmpdir}/run-spark-submit.sh
 
 sed -i 's!JOB_TRACKER!'$JOB_TRACKER'!g' ${tmpdir}/job.properties
 sed -i 's!USER!'$USER'!g'               ${tmpdir}/job.properties
@@ -33,4 +33,4 @@ oozie job -run -config $tmpdir/job.properties 2>&1 | tee $tmpdir/oozie.output
 jobid=`awk '{print $NF}' $tmpdir/oozie.output`
 echo oozie job -info $jobid
 oozie job -info $jobid
-echo oozie job -info $jobid
+echo oozie job -info $jobid -verbose
