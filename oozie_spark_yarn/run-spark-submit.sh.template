@@ -1,6 +1,10 @@
 #!/bin/bash
 
-#source /etc/profile.d/hdfs.sh
+export SPARK_HOME=/opt/cloudera/parcels/SPARK2/lib/spark2
+export PATH=${PATH}:${SPARK_HOME}/bin
+export PYTHONPATH=${PYTHONPATH}:${SPARK_HOME}/python
+export PYTHONPATH=${SPARK_HOME}/python/lib/py4j-0.10.6-src.zip:${PYTHONPATH}
+export PATH="/opt/cloudera/parcels/Anaconda/bin:$PATH"
 
 myscript=TMPDIR/myhive.py
 
@@ -18,8 +22,8 @@ spark-submit \
    --master yarn \
    --deploy-mode client \
    --executor-memory 1g \
-   --name wordcount \
-   --conf "spark.app.id=wordcount" $myscript 2 >> $logfile 2> ${logfile}.err
+   --name myhive \
+   --conf "spark.app.id=myhive" $myscript 2 >> $logfile 2> ${logfile}.err
 
 status=$?
 echo after spark-submit status=$status

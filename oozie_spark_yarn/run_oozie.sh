@@ -28,6 +28,8 @@ sed -i 's!TMPDIR!'$tmpdir'!g'           ${tmpdir}/workflow.xml
 sed -i 's!TMPDIR!'$tmpdir'!g'           ${tmpdir}/myhive.py
 sed -i 's!TMPDIR!'$tmpdir'!g'           ${tmpdir}/run-spark-submit.sh
 
+clush -a -c $tmpdir/
+clush -a chmod 777 $tmpdir
 hdfs dfs -put -f $tmpdir/* $tmpdir/.
 oozie job -run -config $tmpdir/job.properties 2>&1 | tee $tmpdir/oozie.output
 jobid=`awk '{print $NF}' $tmpdir/oozie.output`
