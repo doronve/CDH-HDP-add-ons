@@ -1,0 +1,52 @@
+#!/bin/env python
+import os
+
+for param in os.environ.keys():
+    print "%20s %s" % (param,os.environ[param])
+
+from pyspark.sql import SparkSession
+from pyspark import SparkConf
+print "os.listdir(os.getcwd())"
+os.listdir(os.getcwd())
+#print "spark = SparkSession.builder.enableHiveSupport().getOrCreate()"
+#spark = SparkSession.builder.enableHiveSupport().getOrCreate()
+spark_conf = SparkConf()
+app_name="myhive"
+spark = SparkSession.builder.enableHiveSupport().master("local").appName(app_name).config(conf=spark_conf).getOrCreate()
+
+print "os.listdir(os.getcwd())"
+os.listdir(os.getcwd())
+print "spark.sql('show databases').show()"
+spark.sql('show databases').show()
+print "spark.sql('show tables').show()"
+spark.sql('show tables').show()
+
+database="movies_"+os.environ['USER']
+print "database = %s" % (database)
+sqlcmd="create database IF NOT EXISTS "+database
+print "spark.sql(%s)" % (sqlcmd)
+spark.sql(sqlcmd)
+sqlcmd="use "+database
+print "spark.sql(%s)" % (sqlcmd)
+spark.sql(sqlcmd)
+print "spark.sql('create table IF NOT EXISTS movies ..."
+spark.sql('create table IF NOT EXISTS movies \
+         (movieId int,title string,genres string) \
+         row format delimited fields terminated by ","\
+         stored as textfile')                                              # in textfile format
+print "spark.sql(create table IF NOT EXISTS ratings ..."
+spark.sql("create table IF NOT EXISTS ratings \
+           (userId int,movieId int,rating float,timestamp string)\
+           stored as ORC" )                                                # in ORC format
+print "spark.sql(create table IF NOT EXISTS genres_by_count ..."
+spark.sql("create table IF NOT EXISTS genres_by_count\
+           ( genres string,count int)\
+           stored as AVRO" )                                               # in AVRO format
+print "spark.sql(show tables).show()"
+spark.sql("show tables").show()
+
+sqlcmd="load data inpath '"+os.environ['NAME_NODE']+"/BD/Doron/OozieML/movies.csv' overwrite into table movies"
+sqlcmd="load data local inpath '/BD/Doron/OozieML/movies.csv' overwrite into table movies"
+print "spark.sql(%s)" % (sqlcmd)
+spark.sql(sqlcmd)
+spark.sql("select * from movies").show()

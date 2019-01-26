@@ -1,0 +1,7 @@
+#Sat Jan 26 20:54:16 IST 2019
+appHome=TMPDIR
+oozie.wf.application.path=TMPDIR
+queueName=default
+customerHome=TMPDIR
+jobTracker=JOB_TRACKER
+nameNode=NAME_NODE

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#source /etc/profile.d/hdfs.sh
+
+myscript=/BD/Doron/OozieML/myhive.py
+
+logfile=/tmp/spark_submit_`date +%Y%m%d_%H%M%S`.log
+touch $logfile
+hostname
+
+export SPARK_DIST_CLASSPATH="$SPARK_DIST_CLASSPATH:$(hadoop classpath)"
+
+python --version
+echo spark-submit
+echo spark-submit  >> $logfile
+echo ============  >> $logfile
+spark-submit \
+   --master yarn \
+   --deploy-mode client \
+   --executor-memory 1g \
+   --name wordcount \
+   --conf "spark.app.id=wordcount" $myscript 2 >> $logfile 2> ${logfile}.err
+
+status=$?
+echo after spark-submit status=$status
+echo after spark-submit status=$status >> $logfile
+ls -ld ${logfile}*
+
