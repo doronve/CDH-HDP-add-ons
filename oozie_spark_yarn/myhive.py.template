@@ -45,8 +45,8 @@ spark.sql("create table IF NOT EXISTS genres_by_count\
 print "spark.sql(show tables).show()"
 spark.sql("show tables").show()
 
-sqlcmd="load data inpath '"+os.environ['NAME_NODE']+"TMPDIR/movies.csv' overwrite into table movies"
 sqlcmd="load data local inpath 'TMPDIR/movies.csv' overwrite into table movies"
+sqlcmd="load data inpath 'NAME_NODE/TMPDIR/movies.csv' overwrite into table movies"
 print "spark.sql(%s)" % (sqlcmd)
 spark.sql(sqlcmd)
 spark.sql("select * from movies").show()

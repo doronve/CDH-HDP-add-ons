@@ -26,6 +26,7 @@ sed -i 's!NAME_NODE!'$NAME_NODE'!g'     ${tmpdir}/job.properties
 sed -i 's!TMPDIR!'$tmpdir'!g'           ${tmpdir}/job.properties
 sed -i 's!TMPDIR!'$tmpdir'!g'           ${tmpdir}/workflow.xml
 sed -i 's!TMPDIR!'$tmpdir'!g'           ${tmpdir}/myhive.py
+sed -i 's!NAME_NODE!'$NAME_NODE'!g'     ${tmpdir}/myhive.py
 sed -i 's!TMPDIR!'$tmpdir'!g'           ${tmpdir}/run-spark-submit.sh
 
 clush -a -c $tmpdir/
